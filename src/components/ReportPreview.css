@@ -1,0 +1,203 @@
+.preview-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.report-page {
+  background-color: white;
+  padding: 40px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.report-header {
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.clinic-info h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #1e3a8a; /* Deep blue similar to medical reports */
+  letter-spacing: 1px;
+}
+
+.clinic-info p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+.patient-info-box {
+  border: 1px solid #000;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+}
+
+.results-header {
+  display: flex;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 8px 0;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.report-row {
+  display: flex;
+  padding: 4px 0;
+  font-size: 13px;
+  border-bottom: 1px solid #eee;
+}
+
+.col-test {
+  flex: 2;
+  padding-right: 10px;
+}
+
+.col-result {
+  flex: 1;
+}
+
+.col-unit {
+  flex: 1;
+}
+
+.col-ref {
+  flex: 1.5;
+}
+
+.department-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.test-group-title {
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.test-group-subtitle {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.report-footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 12px;
+  border-top: 1px dashed #ccc;
+  padding-top: 10px;
+}
+
+/* Print specific rules */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  body {
+    background-color: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .preview-container {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .report-page {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 50px 30px !important; /* Adds top space exactly like preview */
+    width: 100% !important;
+    max-width: 800px !important; /* Keeps the proportions exact */
+    margin: 0 auto !important;
+  }
+
+  /* Make sure typography scales perfectly on paper */
+  .report-row {
+    font-size: 11pt !important;
+    padding: 3px 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    display: flex !important;
+  }
+
+  .results-header {
+    font-size: 12pt !important;
+    padding: 6px 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    page-break-after: avoid;
+    break-after: avoid;
+    display: flex !important;
+  }
+
+  .patient-info-box {
+    font-size: 11pt !important;
+    padding: 10px !important;
+    margin-bottom: 15px !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .department-title {
+    font-size: 14pt !important;
+    margin-top: 15px !important;
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  .test-group-title {
+    font-size: 12pt !important;
+    margin-top: 10px !important;
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .test-group-subtitle {
+    font-size: 11pt !important;
+    margin-top: 5px !important;
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .report-footer {
+    font-size: 10pt !important;
+    margin-top: 20px !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
