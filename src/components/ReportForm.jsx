@@ -93,7 +93,7 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
   );
 
   // Generic render input helper
-  const renderInput = (label, name, type = 'text', unit = '') => (
+  const renderInput = (label, name, type = 'text', unit = '', placeholder = '') => (
     <div className="form-group-grid">
       <label htmlFor={name}>{label}</label>
       <div className="input-with-unit">
@@ -104,6 +104,8 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
           value={formData[name] || ''}
           onChange={handleChange}
           className="form-control"
+          placeholder={placeholder}
+          required={true}
         />
         {unit && <span className="unit-label">{unit}</span>}
       </div>
@@ -152,27 +154,27 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Haematology (CBC)</legend>
                 <div className="grid-3-col">
-                  {renderInput('Haemoglobin', 'haemoglobin', 'number', 'gm/dl')}
-                  {renderInput('TLC', 'tlc', 'number', 'th/cumm')}
-                  {renderInput('RBC', 'rbc', 'number', 'millions/cmm')}
-                  {renderInput('HCT', 'hct', 'number', '%')}
-                  {renderInput('MCV', 'mcv', 'number', 'fl')}
-                  {renderInput('MCH', 'mch', 'number', 'pg')}
-                  {renderInput('MCHC', 'mchc', 'number', 'g/dl')}
-                  {renderInput('Platelet Count', 'plateletCount', 'number', 'thou/µL')}
-                  {renderInput('MPV', 'mpv', 'number', 'fl')}
-                  {renderInput('RDW- CV', 'rdwCv', 'number', '%')}
-                  {renderInput('RDW- SD', 'rdwSd', 'number', 'fl')}
-                  {renderInput('PCT', 'pct', 'number', '%')}
-                  {renderInput('PDW', 'pdw', 'number', 'fl')}
+                  {renderInput('Haemoglobin', 'haemoglobin', 'number', 'gm/dl', '13.0-17.0')}
+                  {renderInput('TLC', 'tlc', 'number', 'th/cumm', '4.0-10.0')}
+                  {renderInput('RBC', 'rbc', 'number', 'millions/cmm', '4.5-5.5')}
+                  {renderInput('HCT', 'hct', 'number', '%', '40-50')}
+                  {renderInput('MCV', 'mcv', 'number', 'fl', '83-101')}
+                  {renderInput('MCH', 'mch', 'number', 'pg', '27-32')}
+                  {renderInput('MCHC', 'mchc', 'number', 'g/dl', '31.5-34.5')}
+                  {renderInput('Platelet Count', 'plateletCount', 'number', 'thou/µL', '150-410')}
+                  {renderInput('MPV', 'mpv', 'number', 'fl', '7.0-12.0')}
+                  {renderInput('RDW- CV', 'rdwCv', 'number', '%', '11.6-14.0')}
+                  {renderInput('RDW- SD', 'rdwSd', 'number', 'fl', '35-56')}
+                  {renderInput('PCT', 'pct', 'number', '%', '0.10-0.28')}
+                  {renderInput('PDW', 'pdw', 'number', 'fl', '9.0-17.0')}
                 </div>
                 <h4 className="mt-4">Differential Leucocyte Count</h4>
                 <div className="grid-3-col">
-                  {renderInput('Polymorphs', 'polymorphs', 'number', '%')}
-                  {renderInput('Lymphocytes', 'lymphocytes', 'number', '%')}
-                  {renderInput('Eosinophils', 'eosinophils', 'number', '%')}
-                  {renderInput('Monocytes', 'monocytes', 'number', '%')}
-                  {renderInput('Basophils', 'basophils', 'number', '%')}
+                  {renderInput('Polymorphs', 'polymorphs', 'number', '%', '40-80')}
+                  {renderInput('Lymphocytes', 'lymphocytes', 'number', '%', '20-40')}
+                  {renderInput('Eosinophils', 'eosinophils', 'number', '%', '1-6')}
+                  {renderInput('Monocytes', 'monocytes', 'number', '%', '2-10')}
+                  {renderInput('Basophils', 'basophils', 'number', '%', '0-1')}
                 </div>
               </fieldset>
             )}
@@ -181,8 +183,8 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>HbA1c (Glycated hemoglobin)</legend>
                 <div className="grid-3-col">
-                  {renderInput('Glycosylated Hb (HbA1c)', 'hba1c', 'number', '%')}
-                  {renderInput('Average Glucose', 'averageGlucose', 'number', 'mg/dl')}
+                  {renderInput('Glycosylated Hb (HbA1c)', 'hba1c', 'number', '%', '< 5.7')}
+                  {renderInput('Average Glucose', 'averageGlucose', 'number', 'mg/dl', '73-140')}
                 </div>
               </fieldset>
             )}
@@ -191,8 +193,8 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Glucose (Fasting & PP)</legend>
                 <div className="grid-3-col">
-                  {renderInput('Blood Sugar Fasting', 'fastingSugar', 'number', 'mg/dL')}
-                  {renderInput('Blood Sugar (PP)', 'sugarPp', 'number', 'mg/dL')}
+                  {renderInput('Blood Sugar Fasting', 'fastingSugar', 'number', 'mg/dL', '70-100')}
+                  {renderInput('Blood Sugar (PP)', 'sugarPp', 'number', 'mg/dL', '<140')}
                 </div>
               </fieldset>
             )}
@@ -201,7 +203,7 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Glucose Random</legend>
                 <div className="grid-3-col">
-                  {renderInput('Blood Sugar Random', 'sugarRandom', 'number', 'mg/dL')}
+                  {renderInput('Blood Sugar Random', 'sugarRandom', 'number', 'mg/dL', '<140')}
                 </div>
               </fieldset>
             )}
@@ -210,11 +212,11 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Lipid Profile</legend>
                 <div className="grid-3-col">
-                  {renderInput('Cholesterol', 'cholesterol', 'number', 'mg/dl')}
-                  {renderInput('Triglyceride', 'triglyceride', 'number', 'mg/dl')}
-                  {renderInput('HDL-Cholesterol', 'hdl', 'number', 'mg/dL')}
-                  {renderInput('LDL Cholesterol', 'ldl', 'number', 'mg/dl')}
-                  {renderInput('VLDL Cholesterol', 'vldl', 'number', 'mg/dl')}
+                  {renderInput('Cholesterol', 'cholesterol', 'number', 'mg/dl', '<200')}
+                  {renderInput('Triglyceride', 'triglyceride', 'number', 'mg/dl', '<150')}
+                  {renderInput('HDL-Cholesterol', 'hdl', 'number', 'mg/dL', '40-60')}
+                  {renderInput('LDL Cholesterol', 'ldl', 'number', 'mg/dl', '0-100')}
+                  {renderInput('VLDL Cholesterol', 'vldl', 'number', 'mg/dl', '5 - 40')}
                 </div>
               </fieldset>
             )}
@@ -223,14 +225,14 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Liver Panel (LFT)</legend>
                 <div className="grid-3-col">
-                  {renderInput('Total Bilirubin', 'totalBilirubin', 'number', 'mg/dl')}
-                  {renderInput('Direct Bilirubin', 'directBilirubin', 'number', 'mg/dl')}
-                  {renderInput('Indirect Bilirubin', 'indirectBilirubin', 'number', 'mg/dL')}
-                  {renderInput('SGOT (AST)', 'sgot', 'number', 'IU/L')}
-                  {renderInput('SGPT (ALT)', 'sgpt', 'number', 'IU/L')}
-                  {renderInput('Alk. Phosphatase', 'alkPhosphatase', 'number', 'IU/L')}
-                  {renderInput('Total Protein', 'tProtein', 'number', 'gm/dl')}
-                  {renderInput('Sr. Albumin', 'albumin', 'number', 'gm/dL')}
+                  {renderInput('Total Bilirubin', 'totalBilirubin', 'number', 'mg/dl', '0.0-1.2')}
+                  {renderInput('Direct Bilirubin', 'directBilirubin', 'number', 'mg/dl', '0.0-0.3')}
+                  {renderInput('Indirect Bilirubin', 'indirectBilirubin', 'number', 'mg/dL', '0.2-0.7')}
+                  {renderInput('SGOT (AST)', 'sgot', 'number', 'IU/L', '0-40')}
+                  {renderInput('SGPT (ALT)', 'sgpt', 'number', 'IU/L', '0-41')}
+                  {renderInput('Alk. Phosphatase', 'alkPhosphatase', 'number', 'IU/L', '40-129')}
+                  {renderInput('Total Protein', 'tProtein', 'number', 'gm/dl', '6.4-8.3')}
+                  {renderInput('Sr. Albumin', 'albumin', 'number', 'gm/dL', '3.5-5.2')}
                 </div>
               </fieldset>
             )}
@@ -239,9 +241,9 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Thyroid Profile-I</legend>
                 <div className="grid-3-col">
-                  {renderInput('T3', 't3', 'number', 'ng/dl')}
-                  {renderInput('T4', 't4', 'number', 'ug/dl')}
-                  {renderInput('TSH', 'tsh', 'number', 'uIU/mL')}
+                  {renderInput('T3', 't3', 'number', 'ng/dl', '80-200')}
+                  {renderInput('T4', 't4', 'number', 'ug/dl', '5.1-14.1')}
+                  {renderInput('TSH', 'tsh', 'number', 'uIU/mL', '0.13-6.33')}
                 </div>
               </fieldset>
             )}
@@ -250,7 +252,7 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>TSH Only</legend>
                 <div className="grid-3-col">
-                  {renderInput('TSH', 'tsh', 'number', 'uIU/mL')}
+                  {renderInput('TSH', 'tsh', 'number', 'uIU/mL', '0.13-6.33')}
                 </div>
               </fieldset>
             )}
@@ -259,10 +261,10 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Iron Panel Basic</legend>
                 <div className="grid-3-col">
-                  {renderInput('Iron', 'iron', 'number', 'ug/dl')}
-                  {renderInput('UIBC', 'uibc', 'number', 'ug/dL')}
-                  {renderInput('TIBC', 'tibc', 'number', 'ug/dL')}
-                  {renderInput('Transferrin Saturation', 'transferrinSat', 'number', '%')}
+                  {renderInput('Iron', 'iron', 'number', 'ug/dl', '59–158')}
+                  {renderInput('UIBC', 'uibc', 'number', 'ug/dL', '63 - 433')}
+                  {renderInput('TIBC', 'tibc', 'number', 'ug/dL', '250 - 400')}
+                  {renderInput('Transferrin Saturation', 'transferrinSat', 'number', '%', '15-55')}
                 </div>
               </fieldset>
             )}
@@ -271,12 +273,12 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
               <fieldset className="form-section">
                 <legend>Kidney Panel-2</legend>
                 <div className="grid-3-col">
-                  {renderInput('Blood Urea', 'bloodUrea', 'number', 'mg/dL')}
-                  {renderInput('Serum Creatinine', 'creatinine', 'number', 'mg/dL')}
-                  {renderInput('Uric Acid', 'uricAcid', 'number', 'mg/dl')}
-                  {renderInput('Sodium', 'sodium', 'number', 'mmol/L')}
-                  {renderInput('Potassium', 'potassium', 'number', 'mmol/L')}
-                  {renderInput('Calcium', 'calcium', 'number', 'mg/dL')}
+                  {renderInput('Blood Urea', 'bloodUrea', 'number', 'mg/dL', '21-40.0')}
+                  {renderInput('Serum Creatinine', 'creatinine', 'number', 'mg/dL', '0.7-1.2')}
+                  {renderInput('Uric Acid', 'uricAcid', 'number', 'mg/dl', '3.4 - 7.0')}
+                  {renderInput('Sodium', 'sodium', 'number', 'mmol/L', '136-145')}
+                  {renderInput('Potassium', 'potassium', 'number', 'mmol/L', '3.7-5.5')}
+                  {renderInput('Calcium', 'calcium', 'number', 'mg/dL', '8.6-10.0')}
                 </div>
               </fieldset>
             )}
