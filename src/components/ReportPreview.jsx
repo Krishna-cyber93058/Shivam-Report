@@ -1,5 +1,4 @@
 import React from 'react';
-import { QRCodeSVG as QRCode } from 'qrcode.react';
 import './ReportPreview.css';
 
 function ReportPreview({ data, onBack }) {
@@ -36,17 +35,17 @@ function ReportPreview({ data, onBack }) {
     return false;
   };
 
-  const renderRow = (testName, result, unit, refRange) => {
-    const isAbnormal = isOutOfRange(result, refRange);
+  const renderRow = (testName, value, unit, refRange) => {
+    const outOfRange = isOutOfRange(value, refRange);
     return (
-      <div className="report-row" key={testName}>
-        <div className="col-test">{testName}</div>
-        <div className="col-result">
-          {isAbnormal ? <strong>{result || '-'}</strong> : <span>{result || '-'}</span>}
-        </div>
-        <div className="col-unit">{unit}</div>
-        <div className="col-ref">{refRange}</div>
-      </div>
+      <tr className="report-row">
+        <td className="col-test" style={{ padding: '4px 0' }}>{testName}</td>
+        <td className="col-result" style={{ padding: '4px 0', fontWeight: 'bold', color: outOfRange ? 'var(--danger-color)' : 'inherit' }}>
+          {value || '-'} {outOfRange && '*'}
+        </td>
+        <td className="col-unit" style={{ padding: '4px 0' }}>{unit}</td>
+        <td className="col-ref" style={{ padding: '4px 0' }}>{refRange}</td>
+      </tr>
     );
   };
 
@@ -58,44 +57,56 @@ function ReportPreview({ data, onBack }) {
       </div>
 
       <div className="report-page">
-        {/* Header Section Removed as requested */}
-
-        <div className="patient-info-box">
-          <div className="info-grid">
-            <div><strong>Patient Name:</strong> {data.patientName || '-'}</div>
-            <div><strong>Reg Date:</strong> {data.regDate || '-'}</div>
-            
-            <div><strong>Age/Gender:</strong> {data.ageGender || '-'}</div>
-            <div><strong>Sample Coll. Date:</strong> {data.sampleCollDate || '-'}</div>
-
-            <div><strong>Referred By:</strong> {data.referedBy || '-'}</div>
-            <div><strong>Sample Rec. Date:</strong> {data.sampleRecDate || '-'}</div>
-
-            <div><strong>Barcode No:</strong> {data.barcodeNo || '-'}</div>
-            <div><strong>Report Date:</strong> {data.reportDate || '-'}</div>
-
-            <div><strong>Lab No:</strong> {data.labNo || '-'}</div>
-            <div></div>
-          </div>
-        </div>
-
-        {/* Results Table Header */}
-        <div className="results-header">
-          <div className="col-test">Test Name</div>
-          <div className="col-result">Result</div>
-          <div className="col-unit">Unit</div>
-          <div className="col-ref">Bio. Ref. Range</div>
-        </div>
-
-        <div className="results-body">
+        <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0 }}>
+          <thead style={{ display: 'table-header-group' }}>
+            <tr>
+              <th colSpan="4" style={{ padding: 0, fontWeight: 'normal' }}>
+                <div style={{ height: '2.5in' }} className="print-only"></div>
+                <div className="patient-info-box">
+                  <table style={{ width: '100%', fontSize: 'inherit', borderCollapse: 'collapse', borderSpacing: 0 }}>
+                    <tbody>
+                      <tr>
+                        <td style={{ padding: '4px 0', width: '50%', textAlign: 'left' }}><strong>Patient Name:</strong> {data.patientName || '-'}</td>
+                        <td style={{ padding: '4px 0', width: '50%', textAlign: 'left' }}><strong>Reg Date:</strong> {data.regDate || '-'}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '4px 0', textAlign: 'left' }}><strong>Age/Gender:</strong> {data.ageGender || '-'}</td>
+                        <td style={{ padding: '4px 0', textAlign: 'left' }}><strong>Sample Coll. Date:</strong> {data.sampleCollDate || '-'}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '4px 0', textAlign: 'left' }}><strong>Referred By:</strong> {data.referedBy || '-'}</td>
+                        <td style={{ padding: '4px 0', textAlign: 'left' }}><strong>Sample Rec. Date:</strong> {data.sampleRecDate || '-'}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '4px 0', textAlign: 'left' }}><strong>Barcode No:</strong> {data.barcodeNo || '-'}</td>
+                        <td style={{ padding: '4px 0', textAlign: 'left' }}><strong>Report Date:</strong> {data.reportDate || '-'}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '4px 0', textAlign: 'left' }}><strong>Lab No:</strong> {data.labNo || '-'}</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </th>
+            </tr>
+            <tr className="results-header">
+              <th className="col-test" style={{ textAlign: 'left', borderTop: '1px solid black', borderBottom: '1px solid black', padding: '8px 0' }}>Test Name</th>
+              <th className="col-result" style={{ textAlign: 'left', borderTop: '1px solid black', borderBottom: '1px solid black', padding: '8px 0' }}>Result</th>
+              <th className="col-unit" style={{ textAlign: 'left', borderTop: '1px solid black', borderBottom: '1px solid black', padding: '8px 0' }}>Unit</th>
+              <th className="col-ref" style={{ textAlign: 'left', borderTop: '1px solid black', borderBottom: '1px solid black', padding: '8px 0' }}>Bio. Ref. Range</th>
+            </tr>
+          </thead>
+          
+          <tbody style={{ display: 'table-row-group' }}>
           {(!data.selectedTests || data.selectedTests.haematology) && (
             <>
-              <div className="department-title">DEPARTMENT OF HAEMATOLOGY</div>
-              <div className="test-group-title">Complete Blood Count (CBC)</div>
+              <tr><td colSpan="4"><div className="department-title">DEPARTMENT OF HAEMATOLOGY</div></td></tr>
+              <tr><td colSpan="4"><div className="test-group-title">Complete Blood Count (CBC)</div></td></tr>
               {renderRow('Haemoglobin', data.haemoglobin, 'gm/dl', '13.0-17.0')}
               {renderRow('TLC (Total Leucocyte Count)', data.tlc, 'th/cumm', '4.0-10.0')}
 
-              <div className="test-group-subtitle mt-2" style={{ fontWeight: 'bold' }}>DIFFERENTIAL LEUCOCYTE COUNT</div>
+              <tr><td colSpan="4"><div className="test-group-subtitle mt-2" style={{ fontWeight: 'bold' }}>DIFFERENTIAL LEUCOCYTE COUNT</div></td></tr>
               {renderRow('Polymorphs', data.polymorphs, '%', '40-80')}
               {renderRow('Lymphocytes', data.lymphocytes, '%', '20-40')}
               {renderRow('Eosinophils', data.eosinophils, '%', '1-6')}
@@ -107,8 +118,7 @@ function ReportPreview({ data, onBack }) {
               {renderRow('MCV', data.mcv, 'fl', '83-101')}
               {renderRow('MCH', data.mch, 'pg', '27-32')}
               {renderRow('MCHC', data.mchc, 'g/dl', '31.5-34.5')}
-              
-              {renderRow('Platelet Count', data.plateletCount, 'thou/µL', '150-410')}
+              {renderRow('Platelet Count', data.plateletCount, 'Lacs/cumm', '1.5-4.5')}
               {renderRow('MPV', data.mpv, 'fl', '7.0-12.0')}
               {renderRow('RDW- CV', data.rdwCv, '%', '11.6-14.0')}
               {renderRow('RDW- SD', data.rdwSd, 'fl', '35-56')}
@@ -119,8 +129,8 @@ function ReportPreview({ data, onBack }) {
 
           {(!data.selectedTests || data.selectedTests.hba1c) && (
             <>
-              <div className="department-title mt-4">DEPARTMENT OF IMMUNO BIOCHEMISTRY</div>
-              <div className="test-group-title mt-2">HbA1c (Glycated hemoglobin)</div>
+              <tr><td colSpan="4"><div className="department-title mt-4">DEPARTMENT OF IMMUNO BIOCHEMISTRY</div></td></tr>
+              <tr><td colSpan="4"><div className="test-group-title mt-2">HbA1c (Glycated hemoglobin)</div></td></tr>
               {renderRow('Glycosylated Hb (HbA1c)', data.hba1c, '%', 'Non Diabetic: < 5.7')}
               {renderRow('Average Glucose', data.averageGlucose, 'mg/dl', '73-140')}
             </>
@@ -128,9 +138,8 @@ function ReportPreview({ data, onBack }) {
 
           {(!data.selectedTests || data.selectedTests.fastingSugar) && (
             <>
-              {/* Only show department title if hba1c is not selected to avoid duplication, though usually both are there. Let's just output it. */}
-              {(!data.selectedTests || !data.selectedTests.hba1c) && <div className="department-title mt-4">DEPARTMENT OF IMMUNO BIOCHEMISTRY</div>}
-              <div className="test-group-title mt-2">Glucose (Fasting & PP)</div>
+              {(!data.selectedTests || !data.selectedTests.hba1c) && <tr><td colSpan="4"><div className="department-title mt-4">DEPARTMENT OF IMMUNO BIOCHEMISTRY</div></td></tr>}
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Glucose (Fasting & PP)</div></td></tr>
               {renderRow('Blood Sugar Fasting', data.fastingSugar, 'mg/dL', '70-100')}
               {renderRow('Blood Sugar (PP)', data.sugarPp, 'mg/dL', '<140')}
             </>
@@ -138,15 +147,15 @@ function ReportPreview({ data, onBack }) {
 
           {(!data.selectedTests || data.selectedTests.randomSugar) && (
             <>
-              {(!data.selectedTests || (!data.selectedTests.hba1c && !data.selectedTests.fastingSugar)) && <div className="department-title mt-4">DEPARTMENT OF IMMUNO BIOCHEMISTRY</div>}
-              <div className="test-group-title mt-2">Glucose Random</div>
+              {(!data.selectedTests || (!data.selectedTests.hba1c && !data.selectedTests.fastingSugar)) && <tr><td colSpan="4"><div className="department-title mt-4">DEPARTMENT OF IMMUNO BIOCHEMISTRY</div></td></tr>}
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Glucose Random</div></td></tr>
               {renderRow('Blood Sugar Random', data.sugarRandom, 'mg/dL', '<140')}
             </>
           )}
 
           {(!data.selectedTests || data.selectedTests.lipidProfile) && (
             <>
-              <div className="test-group-title mt-2">Lipid Profile</div>
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Lipid Profile</div></td></tr>
               {renderRow('Cholesterol', data.cholesterol, 'mg/dl', '<200')}
               {renderRow('Triglyceride', data.triglyceride, 'mg/dl', '<150')}
               {renderRow('HDL-Cholesterol', data.hdl, 'mg/dL', '40-60')}
@@ -157,7 +166,7 @@ function ReportPreview({ data, onBack }) {
 
           {(!data.selectedTests || data.selectedTests.liverPanel) && (
             <>
-              <div className="test-group-title mt-2">Liver Panel (LFT)</div>
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Liver Panel (LFT)</div></td></tr>
               {renderRow('Total Bilirubin', data.totalBilirubin, 'mg/dl', '0.0-1.2')}
               {renderRow('Direct Bilirubin', data.directBilirubin, 'mg/dl', '0.0-0.3')}
               {renderRow('Indirect Bilirubin', data.indirectBilirubin, 'mg/dL', '0.2-0.7')}
@@ -171,7 +180,7 @@ function ReportPreview({ data, onBack }) {
 
           {(!data.selectedTests || data.selectedTests.thyroid) && (
             <>
-              <div className="test-group-title mt-2">Thyroid Profile-I [T3,T4,TSH]</div>
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Thyroid Profile-I [T3,T4,TSH]</div></td></tr>
               {renderRow('T3 (Triiodothyronine)', data.t3, 'ng/dl', '80-200')}
               {renderRow('T4 (Thyroxine)', data.t4, 'ug/dl', '5.1-14.1')}
               {renderRow('TSH', data.tsh, 'uIU/mL', '0.13-6.33')}
@@ -180,14 +189,14 @@ function ReportPreview({ data, onBack }) {
 
           {(!data.selectedTests || data.selectedTests.tshOnly) && (
             <>
-              <div className="test-group-title mt-2">Thyroid Stimulating Hormone (TSH)</div>
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Thyroid Stimulating Hormone (TSH)</div></td></tr>
               {renderRow('TSH', data.tsh, 'uIU/mL', '0.13-6.33')}
             </>
           )}
 
           {(!data.selectedTests || data.selectedTests.ironPanel) && (
             <>
-              <div className="test-group-title mt-2">Iron Panel Basic</div>
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Iron Panel Basic</div></td></tr>
               {renderRow('Iron', data.iron, 'ug/dl', '59–158')}
               {renderRow('UIBC', data.uibc, 'ug/dL', '63 - 433')}
               {renderRow('TIBC', data.tibc, 'ug/dL', '250 - 400')}
@@ -197,7 +206,7 @@ function ReportPreview({ data, onBack }) {
 
           {(!data.selectedTests || data.selectedTests.kidneyPanel) && (
             <>
-              <div className="test-group-title mt-2">Kidney Panel-2</div>
+              <tr><td colSpan="4"><div className="test-group-title mt-2">Kidney Panel-2</div></td></tr>
               {renderRow('Blood Urea', data.bloodUrea, 'mg/dL', '21-40.0')}
               {renderRow('Serum Creatinine', data.creatinine, 'mg/dL', '0.7-1.2')}
               {renderRow('Uric Acid', data.uricAcid, 'mg/dl', '3.4 - 7.0')}
@@ -206,18 +215,14 @@ function ReportPreview({ data, onBack }) {
               {renderRow('Calcium', data.calcium, 'mg/dL', '8.6-10.0')}
             </>
           )}
-        </div>
-        
-        <div className="report-footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '2rem' }}>
-          <div>
-            <p>*** End of Report ***</p>
-            <p>This test was performed by Accuprobe Diagnostics</p>
-          </div>
-          <div className="qr-code-section" style={{ textAlign: 'center' }}>
-            <QRCode value={`https://accuprobe.com/verify-report/${data.labNo || 'demo'}`} size={80} />
-            <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', fontWeight: 'bold' }}>Scan to Verify</p>
-          </div>
-        </div>
+          </tbody>
+
+          <tfoot style={{ display: 'table-footer-group' }}>
+            <tr>
+              <td colSpan="4" style={{ height: '3in' }}></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   );

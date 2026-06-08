@@ -105,7 +105,8 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
           onChange={handleChange}
           className="form-control"
           placeholder={placeholder}
-          required={true}
+          /* required={true} */
+          step={type === 'number' ? 'any' : undefined}
         />
         {unit && <span className="unit-label">{unit}</span>}
       </div>
@@ -161,7 +162,7 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
                   {renderInput('MCV', 'mcv', 'number', 'fl', '83-101')}
                   {renderInput('MCH', 'mch', 'number', 'pg', '27-32')}
                   {renderInput('MCHC', 'mchc', 'number', 'g/dl', '31.5-34.5')}
-                  {renderInput('Platelet Count', 'plateletCount', 'number', 'thou/µL', '150-410')}
+                  {renderInput('Platelet Count', 'plateletCount', 'number', 'Lacs/cumm', '1.5-4.5')}
                   {renderInput('MPV', 'mpv', 'number', 'fl', '7.0-12.0')}
                   {renderInput('RDW- CV', 'rdwCv', 'number', '%', '11.6-14.0')}
                   {renderInput('RDW- SD', 'rdwSd', 'number', 'fl', '35-56')}
