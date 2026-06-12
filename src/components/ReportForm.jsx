@@ -105,7 +105,7 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
           onChange={handleChange}
           className="form-control"
           placeholder={placeholder}
-          /* required={true} */
+          required
           step={type === 'number' ? 'any' : undefined}
         />
         {unit && <span className="unit-label">{unit}</span>}
@@ -156,7 +156,7 @@ function ReportForm({ onGeneratePdf, initialData = {} }) {
                 <legend>Haematology (CBC)</legend>
                 <div className="grid-3-col">
                   {renderInput('Haemoglobin', 'haemoglobin', 'number', 'gm/dl', '13.0-17.0')}
-                  {renderInput('TLC', 'tlc', 'number', 'th/cumm', '4.0-10.0')}
+                  {renderInput('TLC', 'tlc', 'number', '/cumm', '4000-10000')}
                   {renderInput('RBC', 'rbc', 'number', 'millions/cmm', '4.5-5.5')}
                   {renderInput('HCT', 'hct', 'number', '%', '40-50')}
                   {renderInput('MCV', 'mcv', 'number', 'fl', '83-101')}

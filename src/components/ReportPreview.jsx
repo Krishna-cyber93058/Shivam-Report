@@ -40,8 +40,8 @@ function ReportPreview({ data, onBack }) {
     return (
       <tr className="report-row">
         <td className="col-test" style={{ padding: '4px 0' }}>{testName}</td>
-        <td className="col-result" style={{ padding: '4px 0', fontWeight: 'bold', color: outOfRange ? 'var(--danger-color)' : 'inherit' }}>
-          {value || '-'} {outOfRange && '*'}
+        <td className="col-result" style={{ padding: '4px 0', fontWeight: outOfRange ? 'bold' : 'normal', color: 'inherit' }}>
+          {value || '-'}
         </td>
         <td className="col-unit" style={{ padding: '4px 0' }}>{unit}</td>
         <td className="col-ref" style={{ padding: '4px 0' }}>{refRange}</td>
@@ -61,7 +61,7 @@ function ReportPreview({ data, onBack }) {
           <thead style={{ display: 'table-header-group' }}>
             <tr>
               <th colSpan="4" style={{ padding: 0, fontWeight: 'normal' }}>
-                <div style={{ height: '2.5in' }} className="print-only"></div>
+                <div style={{ height: '1.2in' }} className="print-only"></div>
                 <div className="patient-info-box">
                   <table style={{ width: '100%', fontSize: 'inherit', borderCollapse: 'collapse', borderSpacing: 0 }}>
                     <tbody>
@@ -104,7 +104,7 @@ function ReportPreview({ data, onBack }) {
               <tr><td colSpan="4"><div className="department-title">DEPARTMENT OF HAEMATOLOGY</div></td></tr>
               <tr><td colSpan="4"><div className="test-group-title">Complete Blood Count (CBC)</div></td></tr>
               {renderRow('Haemoglobin', data.haemoglobin, 'gm/dl', '13.0-17.0')}
-              {renderRow('TLC (Total Leucocyte Count)', data.tlc, 'th/cumm', '4.0-10.0')}
+              {renderRow('TLC (Total Leucocyte Count)', data.tlc, '/cumm', '4000-10000')}
 
               <tr><td colSpan="4"><div className="test-group-subtitle mt-2" style={{ fontWeight: 'bold' }}>DIFFERENTIAL LEUCOCYTE COUNT</div></td></tr>
               {renderRow('Polymorphs', data.polymorphs, '%', '40-80')}
